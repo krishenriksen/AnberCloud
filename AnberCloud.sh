@@ -178,6 +178,7 @@ else
     cd $DIR
 
     # update list
+    dialog --backtitle "AnberCloud - DEVICE ID: $DEVICE" --infobox "\nPlease wait, refreshing list ..." 5 40 > /dev/tty1
     gitit pull
 
     options=(
@@ -193,7 +194,7 @@ else
     done
 
     while true; do
-      cmd=(dialog --clear --backtitle "AnberCloud - DEVICE ID: $DEVICE" --title "[ Syncing with $SYNC ]" --cancel-label "" --menu "Passphrase: $KEY" "15" "58" "15")
+      cmd=(dialog --clear --backtitle "AnberCloud - DEVICE ID: $DEVICE" --title "[ Syncing with device: $SYNC ]" --cancel-label "" --menu "Key: $KEY" "15" "58" "15")
 
       choices=$("${cmd[@]}" "${options[@]}" 2>&1 > /dev/tty1)
 
