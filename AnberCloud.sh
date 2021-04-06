@@ -28,7 +28,7 @@ DIR=~/AnberCloud
 BINDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/AnberPorts/bin"
 GITSRC=https://github.com/krishenriksen/AnberCloud.git
 DEVICE=`cat /sys/class/net/$(ip route show default | awk '/default/ {print $5}')/address | sed 's/:/-/g'`
-SYNC=`cat $DIR/sync-id`
+SYNC=`cat $SCRIPTDIR/sync-id`
 KEY=`cat $SCRIPTDIR/key`
 LOG=/tmp/AnberCloud.txt
 
@@ -107,20 +107,9 @@ SelectSync() {
 
   gitit checkout -b $1 2>&1 | tee -a $LOG
 
-  echo $1 > ./sync-id
-  gitit add sync-id 2>&1 | tee -a $LOG
+  echo $1 > $SCRIPTDIR/sync-id
 
-  # fix it
-  git remote set-url origin git@github.com:krishenriksen/AnberCloud.git
-
-  # stamp it
-  gitit commit -m `date +%s` 2>&1 | tee -a $LOG
-
-  gitit push --set-upstream origin $1 2>&1 | tee -a $LOG
-
-  SYNC=$1
-
-  Syncing $SYNC
+  Syncing $1
 }
 
 Generate() {
@@ -142,6 +131,9 @@ Setup() {
   gitit clone $GITSRC $DIR 2>&1 | tee -a $LOG
 
   cd $DIR
+
+  # fix it
+  git remote set-url origin git@github.com:krishenriksen/AnberCloud.git
 
   # unique key
   Generate
