@@ -25,7 +25,7 @@ Assuming that everything is configured, it will do the following:
 
 ## Protecting Your Save Games Since 2021
 
-You can generate a new unique key file in AnberCloud, by clicking Code and clicking the A button. This will password protect new game saves with this key file.
+You can generate a new unique key file in AnberCloud, by selecting Key and clicking the A button. This will password protect new game saves with this key file.
 
 - Note that you will not be able to restore old game saves and states unless you've written down and saved the Passphrase used for these.
 - To change passphrase key file manually, edit the `key` file located in `/roms/ports/AnberCloud/key`
