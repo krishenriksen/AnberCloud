@@ -57,7 +57,7 @@ gitit() {
 }
 
 Syncing() {
-  dialog --backtitle "System" --infobox "\nNow syncing with device:\n\n$1" 7 45 > /dev/tty1
+  dialog --backtitle "AnberCloud - DEVICE ID: $1" --infobox "\nNow syncing with device:\n\n$1" 7 45 > /dev/tty1
 
   gitit pull git@github.com:krishenriksen/AnberCloud $1 2>&1 | tee -a $LOG
 
@@ -102,7 +102,7 @@ Syncing() {
 }
 
 SelectSync() {
-  dialog --backtitle "System" --infobox "\nNow syncing with device:\n\n$1" 7 45 > /dev/tty1
+  dialog --backtitle "AnberCloud - DEVICE ID: $1" --infobox "\nNow syncing with device:\n\n$1" 7 45 > /dev/tty1
 
   gitit checkout -b $1 2>&1 | tee -a $LOG
 
@@ -129,7 +129,7 @@ Generate() {
 }
 
 Setup() {
-  dialog --backtitle "System" --infobox "\nPlease wait ..." 5 25 > /dev/tty1
+  dialog --backtitle "AnberCloud - DEVICE ID: $DEVICE" --infobox "\nPlease wait ..." 5 25 > /dev/tty1
 
   mkdir ~/.ssh
   ssh-keyscan -H github.com >> ~/.ssh/known_hosts 2>&1 | tee -a $LOG
