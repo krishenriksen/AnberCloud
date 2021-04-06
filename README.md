@@ -13,10 +13,10 @@ Synchronize game saves to the cloud for Anbernic devices RG351p/m, RG351v runnin
 
 Assuming that everything is configured, it will do the following:
 
-    On sync files in your game saves and game states directories will be uploaded to github protected by a uniquiely generated key file.
-    When you end or start a game current saves and states will be downloaded and synced with the newest versions.
-    If you want to revert to an old save, you can look it up in the commit and replace with this.
-    When you save a game or game state, it is uploaded to github under your identifier.
+- On sync files in your game saves and game states directories will be uploaded to github protected by a uniquiely generated key file.
+- When you end or start a game current saves and states will be downloaded and synced with the newest versions.
+- If you want to revert to an old save, you can look it up in the commit and replace with this.
+- When you save a game or game state, it is uploaded to github under your identifier.
 
 ## Support the project
 
