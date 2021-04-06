@@ -187,7 +187,7 @@ else
     done
 
     while true; do
-      cmd=(dialog --clear --backtitle "AnberCloud - DEVICE ID: $DEVICE" --title " [ Syncing with $SYNC ] " --menu "You can use UP/DOWN on the D-pad and A to select:" "15" "58" "15")
+      cmd=(dialog --clear --backtitle "AnberCloud - DEVICE ID: $DEVICEtest" --title " [ Unique Passphrase $KEY ] " --menu "Syncing with $SYNC" "15" "58" "15")
 
       choices=$("${cmd[@]}" "${options[@]}" 2>&1 > /dev/tty1)
 
