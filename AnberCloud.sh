@@ -106,7 +106,7 @@ SelectSync() {
 
   gitit checkout -b $1 2>&1 | tee -a $LOG
 
-  echo $1 > sync-id
+  echo $1 > ./sync-id
   gitit add sync-id 2>&1 | tee -a $LOG
 
   # fix it
@@ -122,15 +122,17 @@ SelectSync() {
   Syncing $SYNC
 }
 
+Generate() {
+  # unique key
+  echo `uuidgen` > ./key
+  KEY=`cat $DIR/key`
+}
+
 Setup() {
   dialog --backtitle "System" --infobox "\nPlease wait ..." 5 25 > /dev/tty1
 
   mkdir ~/.ssh
   ssh-keyscan -H github.com >> ~/.ssh/known_hosts 2>&1 | tee -a $LOG
-
-  # unique key
-  echo `uuidgen` > ./key
-  KEY=`cat $DIR/key`
 
   # setup git
   gitit config --global user.email "device@anbernic" 2>&1 | tee -a $LOG
@@ -139,6 +141,9 @@ Setup() {
   gitit clone $GITSRC $DIR 2>&1 | tee -a $LOG
 
   cd $DIR
+
+  # unique key
+  Generate
 
   unzip .github/cloud.zip -d .github/
   chmod 600 .github/save
@@ -177,6 +182,7 @@ else
 
     options=(
       Sync "Synchronize"
+      Key "Generate new"
       Exit ""
     )
 
@@ -187,13 +193,14 @@ else
     done
 
     while true; do
-      cmd=(dialog --clear --backtitle "AnberCloud - DEVICE ID: $DEVICEtest" --title " [ Unique Passphrase $KEY ] " --menu "Syncing with $SYNC" "15" "58" "15")
+      cmd=(dialog --clear --backtitle "AnberCloud - DEVICE ID: $DEVICE" --title "[ Syncing with $SYNC ]" --cancel-label "" --menu "Passphrase: $KEY" "15" "58" "15")
 
       choices=$("${cmd[@]}" "${options[@]}" 2>&1 > /dev/tty1)
 
       for choice in $choices; do
         case $choice in
           Sync) Syncing $SYNC ;;
+          Key) Generate ;;
           Exit) ExitMenu ;;
           *) SelectSync $choice ;;
         esac

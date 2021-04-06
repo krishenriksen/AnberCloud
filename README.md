@@ -13,12 +13,24 @@ Synchronize game saves to the cloud for Anbernic devices RG351p/m, RG351v runnin
 
 Assuming that everything is configured, it will do the following:
 
-- On sync files in your game saves and game states directories will be uploaded to github protected by a uniquiely generated key file.
+- Game saves and game states directories will be uploaded to github when you sync, protected by a uniquiely generated key file.
+
+- If you want to sync to another device, link this to your main device in the menu, and change the key file to match the generated on main device.
+
 - When you end or start a game current saves and states will be downloaded and synced with the newest versions.
+
 - If you want to revert to an old save, you can look it up in the commit and replace with this.
+
 - When you save a game or game state, it is uploaded to github under your identifier.
 
-## Support the project
+## Protecting Your Save Games Since 2021
+
+You can generate a new unique key file in AnberCloud, by clicking Code and clicking the A button. This will password protect new game saves with this key file.
+
+- Note that you will not be able to restore old game saves and states unless you've written down and saved the Passphrase used for these.
+- To change passphrase key file manually, edit the `key` file located in `/roms/ports/AnberCloud/key`
+
+## Support The Project
 
 [<img src="https://github.com/krishenriksen/AnberPorts/raw/master/sponsor.png" width="200"/>](https://github.com/sponsors/krishenriksen)
 
