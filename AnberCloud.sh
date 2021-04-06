@@ -60,16 +60,6 @@ Syncing() {
 
   gitit pull git@github.com:krishenriksen/AnberCloud $1 2>&1 | tee -a $LOG
 
-  # save
-  rsync -r -u ~/.config/retroarch/saves/* ./saves/ 2>&1 | tee -a $LOG
-  rsync -r -u ~/.config/retroarch/states/* ./states/ 2>&1 | tee -a $LOG
-  if id "ark" &>/dev/null || id "odroid" &>/dev/null; then
-    rsync -r -u /opt/amiberry/savestates/* ./savestates/ 2>&1 | tee -a $LOG
-    sudo rsync -a -u --include '*/' --include '*.state' --exclude '*' /roms/ ./roms/
-  else
-    rsync -a -u --include '*/' --include '*.state' --exclude '*' /roms/ ./roms/
-  fi
-
   # load
   rsync -r -u ./saves/* ~/.config/retroarch/saves/ 2>&1 | tee -a $LOG
   rsync -r -u ./states/* ~/.config/retroarch/states/ 2>&1 | tee -a $LOG
@@ -78,6 +68,16 @@ Syncing() {
     sudo rsync -a -u --include '*/' --include '*.state' --exclude '*' ./roms/ /roms/
   else
   	rsync -a -u --include '*/' --include '*.state' --exclude '*' ./roms/ /roms/
+  fi
+
+  # save
+  rsync -r -u ~/.config/retroarch/saves/* ./saves/ 2>&1 | tee -a $LOG
+  rsync -r -u ~/.config/retroarch/states/* ./states/ 2>&1 | tee -a $LOG
+  if id "ark" &>/dev/null || id "odroid" &>/dev/null; then
+    rsync -r -u /opt/amiberry/savestates/* ./savestates/ 2>&1 | tee -a $LOG
+    sudo rsync -a -u --include '*/' --include '*.state' --exclude '*' /roms/ ./roms/
+  else
+    rsync -a -u --include '*/' --include '*.state' --exclude '*' /roms/ ./roms/
   fi
 
 
