@@ -38,6 +38,17 @@ if id "ark" &>/dev/null || id "odroid" &>/dev/null; then
   sudo chmod 666 /dev/tty1
 fi
 
+#
+# Check connectivity
+#
+GW=`ip route | awk '/default/ { print $3 }'`
+if [ -z "$GW" ]; then
+  printf "\e[32mYour network connection does not seem to be working.\nDid you make sure to configure your wifi connection\nusing the Wifi selection in the Options menu?" > /dev/tty1
+  sleep 10
+
+  exit 1
+fi
+
 printf "\033c" > /dev/tty1
 
 # clear log
