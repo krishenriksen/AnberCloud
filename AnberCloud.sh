@@ -83,7 +83,7 @@ Sync() {
 }
 
 SelectSync() {
-  dialog --backtitle "System" --infobox "\nNow syncing with main device:\n\n$1" 7 56 > /dev/tty1
+  dialog --backtitle "System" --infobox "\nNow syncing with device:\n\n$1" 7 45 > /dev/tty1
 
   gitit checkout -b $1 2>&1 | tee -a $LOG
 
@@ -158,9 +158,9 @@ else
         options+=($BRANCH "Device")
       fi
     done
-    
+
     while true; do
-      cmd=(dialog --clear --backtitle "AnberCloud - DEVICE ID: $DEVICE" --title " [ Syncing to $SYNC ] " --menu "You can use UP/DOWN on the D-pad and A to select:" "15" "56" "15")
+      cmd=(dialog --clear --backtitle "AnberCloud - DEVICE ID: $DEVICE" --title " [ Syncing with $SYNC ] " --menu "You can use UP/DOWN on the D-pad and A to select:" "15" "56" "15")
 
       choices=$("${cmd[@]}" "${options[@]}" 2>&1 > /dev/tty1)
 
