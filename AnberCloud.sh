@@ -23,12 +23,13 @@ version=0.0.1
 #
 # AnberCloud
 #
+SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/"
 DIR=~/AnberCloud
 BINDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/AnberPorts/bin"
 GITSRC=https://github.com/krishenriksen/AnberCloud.git
 DEVICE=`cat /sys/class/net/$(ip route show default | awk '/default/ {print $5}')/address | sed 's/:/-/g'`
 SYNC=`cat $DIR/sync-id`
-KEY=`cat $DIR/key`
+KEY=`cat $SCRIPTDIR/key`
 LOG=/tmp/AnberCloud.txt
 
 export TERM=linux
@@ -124,8 +125,8 @@ SelectSync() {
 
 Generate() {
   # unique key
-  echo `uuidgen` > ./key
-  KEY=`cat $DIR/key`
+  echo `uuidgen` > $SCRIPTDIR/key
+  KEY=`cat $SCRIPTDIR/key`
 }
 
 Setup() {
