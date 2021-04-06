@@ -50,7 +50,7 @@ ExitMenu() {
   else
     pgrep -f oga_controls | xargs kill -9
     pgrep -f AnberCloud | xargs kill -9
-  fi	
+  fi
 }
 
 gitit() {
