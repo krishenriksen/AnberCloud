@@ -26,7 +26,7 @@ version=0.0.1
 DIR=~/AnberCloud
 BINDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/AnberPorts/bin"
 GITSRC=https://github.com/krishenriksen/AnberCloud.git
-DEVICE=`cat /etc/machine-id`
+DEVICE=`cat /sys/class/net/$(ip route show default | awk '/default/ {print $5}')/address`
 SYNC=`cat $DIR/sync-id`
 LOG=/tmp/AnberCloud.txt
 
