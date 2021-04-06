@@ -9,6 +9,8 @@
 
 Synchronize game saves to the cloud for Anbernic devices RG351p/m, RG351v running on ArkOS, The RA and 351elec.
 
+- [AnberPorts required to install and run](https://github.com/sponsors/krishenriksen)
+
 ## What It Actually Does
 
 Assuming that everything is configured, it will do the following:
