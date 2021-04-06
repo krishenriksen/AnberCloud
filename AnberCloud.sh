@@ -28,6 +28,7 @@ BINDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/AnberP
 GITSRC=https://github.com/krishenriksen/AnberCloud.git
 DEVICE=`cat /sys/class/net/$(ip route show default | awk '/default/ {print $5}')/address | sed 's/:/-/g'`
 SYNC=`cat $DIR/sync-id`
+KEY=`cat $DIR/key`
 LOG=/tmp/AnberCloud.txt
 
 export TERM=linux
@@ -60,6 +61,12 @@ Syncing() {
 
   gitit pull git@github.com:krishenriksen/AnberCloud $1 2>&1 | tee -a $LOG
 
+  # populate saves with protected from zip file
+  unzip -P $KEY -qq -o ./saves/saves.zip -d .
+  unzip -P $KEY -qq -o ./states/states.zip -d .
+  unzip -P $KEY -qq -o ./savestates/savestates.zip -d .
+  unzip -P $KEY -qq -o ./roms/roms.zip -d .
+
   # load
   rsync -r -u ./saves/* ~/.config/retroarch/saves/ 2>&1 | tee -a $LOG
   rsync -r -u ./states/* ~/.config/retroarch/states/ 2>&1 | tee -a $LOG
@@ -80,6 +87,11 @@ Syncing() {
     rsync -a -u --include '*/' --include '*.state' --exclude '*' /roms/ ./roms/
   fi
 
+  # password protect saves with key
+  zip -r ./saves/saves.zip ./saves/ -P $KEY
+  zip -r ./states/states.zip ./states/ -P $KEY
+  zip -r ./savestates/savestates.zip ./savestates/ -P $KEY
+  zip -r ./roms/roms.zip ./roms/ -P $KEY
 
   gitit add saves savestates states roms 2>&1 | tee -a $LOG
 
@@ -116,6 +128,11 @@ Setup() {
   mkdir ~/.ssh
   ssh-keyscan -H github.com >> ~/.ssh/known_hosts 2>&1 | tee -a $LOG
 
+  # unique key
+  echo `uuidgen` > ./key
+  KEY=`cat $DIR/key`
+
+  # setup git
   gitit config --global user.email "device@anbernic" 2>&1 | tee -a $LOG
   gitit config --global user.name $DEVICE 2>&1 | tee -a $LOG
 

@@ -7,7 +7,16 @@
 
 ## AnberCloud
 
-Synchronize game saves to the cloud for Anbernic devices RG351p/m, RG351v running on ArkOS, The RA and 351elec. 
+Synchronize game saves to the cloud for Anbernic devices RG351p/m, RG351v running on ArkOS, The RA and 351elec.
+
+## What It Actually Does
+
+Assuming that everything is configured, it will do the following:
+
+    On sync files in your game saves and game states directories will be uploaded to github protected by the key file you provide.
+    When you end or start a game current saves and states will be downloaded and synced with the newest versions.
+    If you want to revert to an old save, you can look it up in the commit and replace with this.
+    When you save a game or game state, it is uploaded to github under your identifier.
 
 ## Support the project
 
