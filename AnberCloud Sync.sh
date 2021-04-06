@@ -23,5 +23,5 @@ version=0.0.1
 #
 # AnberCloud
 #
-SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/"
-bash "$SCRIPTDIR/AnberCloud Setup.sh sync"
+SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+bash $SCRIPTDIR/AnberCloud\ Setup.sh sync

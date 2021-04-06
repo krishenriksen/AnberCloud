@@ -173,7 +173,6 @@ else
     options=(
       Sync "Synchronize"
       Key "Generate new"
-      Exit ""
     )
 
     for BRANCH in `gitit branch --remotes --format='%(refname:short)' | cut -c 8-`; do
@@ -183,15 +182,20 @@ else
     done
 
     while true; do
-      cmd=(dialog --clear --backtitle "AnberCloud - DEVICE ID: $DEVICE" --title "[ Syncing with device: $SYNC ]" --cancel-label "" --menu "Key: $KEY" "15" "58" "15")
+      selection=(dialog \
+   	  --backtitle "AnberCloud - DEVICE ID: $DEVICE" \
+   	  --title "[ Syncing with device: $SYNC ]" \
+   	  --no-collapse \
+   	  --clear \
+	  --cancel-label "Select + Start to Exit" \
+      --menu "Key: $KEY" 15 55 15)
 
-      choices=$("${cmd[@]}" "${options[@]}" 2>&1 > /dev/tty1)
+      choices=$("${selection[@]}" "${options[@]}" 2>&1 > /dev/tty1)
 
       for choice in $choices; do
         case $choice in
           Sync) Syncing $SYNC ;;
           Key) Generate ;;
-          Exit) ExitMenu ;;
           *) SelectSync $choice ;;
         esac
       done
