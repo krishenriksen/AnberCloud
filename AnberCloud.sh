@@ -140,12 +140,8 @@ Setup() {
 
   unzip .github/cloud.zip -d .github/
   chmod 600 .github/save
-  gitit rm -f .github/cloud.zip
 
   gitit checkout -b $DEVICE 2>&1 | tee -a $LOG
-
-  # clean up
-  gitit rm -r AnberCloud.sh README.md
 
   # save states
   SelectSync $DEVICE
