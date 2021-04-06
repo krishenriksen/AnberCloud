@@ -55,7 +55,9 @@ gitit() {
   git -c core.sshCommand="ssh -i $DIR/.github/save" "$@"
 }
 
-Sync() {
+Syncing() {
+  dialog --backtitle "System" --infobox "\nNow syncing with device:\n\n$1" 7 45 > /dev/tty1
+
   gitit pull git@github.com:krishenriksen/AnberCloud $1 2>&1 | tee -a $LOG
 
   # save
@@ -100,7 +102,7 @@ SelectSync() {
 
   SYNC=$1
 
-  Sync $SYNC
+  Syncing $SYNC
 }
 
 Setup() {
@@ -132,7 +134,7 @@ Setup() {
 if [[ $1 == "sync" ]]; then
   if [ -d "$DIR/.git" ]; then
     cd $DIR
-    Sync $SYNC
+    Syncing $SYNC
   fi
 else
   if id "ark" &>/dev/null || id "odroid" &>/dev/null; then
@@ -141,17 +143,20 @@ else
     $BINDIR/oga_controls AnberCloud &
   fi
 
-  if [ ! -d "$DIR/.git" ]; then
+  if [[ ! -d "$DIR/.git" ]]; then
     Setup
   fi
 
-  if [ -d "$DIR/.git" ]; then
+  if [[ -d "$DIR/.git" ]]; then
     cd $DIR
 
     # update list
     gitit pull
 
-    options=(Exit "Exit")
+    options=(
+      Sync "Synchronize"
+      Exit ""
+    )
 
     for BRANCH in `gitit branch --remotes --format='%(refname:short)' | cut -c 8-`; do
   	  if [[ $BRANCH != "HEAD" ]] && [[ $BRANCH != "master" ]]; then
@@ -160,12 +165,13 @@ else
     done
 
     while true; do
-      cmd=(dialog --clear --backtitle "AnberCloud - DEVICE ID: $DEVICE" --title " [ Syncing with $SYNC ] " --menu "You can use UP/DOWN on the D-pad and A to select:" "15" "56" "15")
+      cmd=(dialog --clear --backtitle "AnberCloud - DEVICE ID: $DEVICE" --title " [ Syncing with $SYNC ] " --menu "You can use UP/DOWN on the D-pad and A to select:" "15" "58" "15")
 
       choices=$("${cmd[@]}" "${options[@]}" 2>&1 > /dev/tty1)
 
       for choice in $choices; do
         case $choice in
+          Sync) Syncing $SYNC ;;
           Exit) ExitMenu ;;
           *) SelectSync $choice ;;
         esac
