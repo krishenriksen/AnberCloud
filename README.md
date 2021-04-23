@@ -25,7 +25,7 @@ You can generate a new unique key file in AnberCloud, by selecting Key and click
 - Note that you will not be able to restore old game saves and states unless you've written down and saved the key file used for these.
 - To change key file manually, edit the `key` file located in `/roms/ports/key`
 
-### Support the project
+Support the project
 ---
 
 [![Donate](https://github.com/krishenriksen/AnberPorts/raw/master/donate.png)](https://www.paypal.me/krishenriksendk)
